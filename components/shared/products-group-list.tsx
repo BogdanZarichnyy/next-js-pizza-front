@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
 import { useIntersection } from 'react-use';
 import { Title } from './title';
 import { ProductCard } from './product-card';
-import { cn } from "@/lib/utils"
-import { useCategoryStore } from '@/store/category';
+import { cn } from "../../lib/utils"
+import { useCategoryStore } from '../../store/category';
 
 interface Props {
   title: string;

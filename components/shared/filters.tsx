@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 import { Title } from "./title";
 import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Input } from '../ui';
 import { FilterChecboxProps, FilterCheckbox } from './filter-checkbox';
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 type Item = FilterChecboxProps;
 

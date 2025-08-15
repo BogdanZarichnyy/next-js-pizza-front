@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 import { Container } from "./container";
 import { Categories } from "./categories";
 import { SortPopup } from "./sort-popup";
