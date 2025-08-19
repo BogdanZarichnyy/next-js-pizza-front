@@ -3,20 +3,22 @@
 import { useState } from 'react';
 import { Input, Skeleton } from '../ui';
 import { FilterChecboxProps, FilterCheckbox } from './filter-checkbox';
-import { cn } from "../../lib/utils"
+import { cn } from "../../lib/utils";
 
 type Item = FilterChecboxProps;
 
 interface Props {
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   limit?: number;
-  loading?: boolean,
+  loading?: boolean;
   searchInputPlaceholder?: string;
-  onChange?: (values: string[]) => void,
-  defaultValue?: string[],
-  className?: string,
+  onClickCheckbox?: (id: string) => void;
+  defaultValue?: string[];
+  selected?: Set<string>;
+  name?: string;
+  className?: string;
 }
 
 export const CheckboxFiltersGroup: React.FC<Props> = ({ 
@@ -25,15 +27,16 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   defaultItems,
   limit = 5,
   searchInputPlaceholder = 'Пошук...',
-  onChange,
+  onClickCheckbox,
   className,
   loading,
-  defaultValue
+  selected,
+  name,
 }) => {
   const [showAll, setShowAll] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => { // 6:14:04
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   }
 
@@ -51,7 +54,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
 
   const list = showAll 
     ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase())) 
-    : defaultItems.slice(0, limit);
+    : (defaultItems || items).slice(0, limit);
 
   return (
     <div className={cn("", className)}>
@@ -74,8 +77,9 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={false}
-            onCheckedChange={(ids) => console.log(ids)}
+            checked={selected?.has(item.value)}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            name={name}
           />
         ))}
       </div>

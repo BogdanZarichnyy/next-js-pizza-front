@@ -4,4 +4,4 @@ export default function ProductPage({ params: { id } }: { params: { id: string }
       Product {id}
     </div>
   );
-}
+} // 7:24:36
