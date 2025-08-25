@@ -77,7 +77,7 @@ model Cart {
   id          Int        @id @default(autoincrement())
   user        User?      @relation(fields: [userId], references: [id])
   userId      Int?       @unique
-  itens       CartItem[]
+  items       CartItem[]
   totalAmount Int        @default(0)
   token       String
   createAt    DateTime   @default(now())
@@ -90,7 +90,7 @@ model CartItem {
   cartId        Int
   productItem   ProductItem  @relation(fields: [productItemId], references: [id])
   productItemId Int
-  quantity      Int
+  quantity      Int          @default(1)
   ingredients   Ingredient[]
   createAt      DateTime     @default(now())
   updateAt      DateTime     @updatedAt

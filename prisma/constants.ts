@@ -36,7 +36,7 @@ export const ingredients = [
   {
     name: 'Сир чеддер',
     price: 79,
-    imageUrl: '/assets/Сир чеддер.jpg',
+    imageUrl: '/assets/Сир чеддер.jpeg',
   },
   {
     name: 'Сир пармезан',
@@ -91,7 +91,7 @@ export const ingredients = [
   {
     name: 'Соковиті ананаси',
     price: 59,
-    imageUrl: '/assets/Соковиті ананаси.jpg',
+    imageUrl: '/assets/Соковиті ананаси.jpeg',
   },
   {
     name: 'Італійські трави',
