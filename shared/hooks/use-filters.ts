@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useSet } from 'react-use';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface PriceProps {
   priceFrom?: number;
@@ -58,14 +58,27 @@ export const useFilters = (): ReturnProps => {
     }));
   }
 
-  return { 
-    selectedIngredients, 
-    sizes, 
-    pizzaTypes, 
-    prices, 
-    setPrices: updatePrice, 
-    setPizzaTypes: togglePizzaTypes,
-    setSizes: toggleSizes,
-    setSelectedIngredients: toggleIngredients
-  };
+  // return { 
+  //   selectedIngredients, 
+  //   sizes, 
+  //   pizzaTypes, 
+  //   prices, 
+  //   setPrices: updatePrice, 
+  //   setPizzaTypes: togglePizzaTypes,
+  //   setSizes: toggleSizes,
+  //   setSelectedIngredients: toggleIngredients
+  // };
+
+  return useMemo(() => (
+    { 
+      selectedIngredients, 
+      sizes, 
+      pizzaTypes, 
+      prices, 
+      setPrices: updatePrice, 
+      setPizzaTypes: togglePizzaTypes,
+      setSizes: toggleSizes,
+      setSelectedIngredients: toggleIngredients
+    }
+  ), [selectedIngredients, sizes, pizzaTypes, prices]);
 }

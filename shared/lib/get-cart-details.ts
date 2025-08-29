@@ -32,7 +32,7 @@ export const getCartDetails = (data: CartDTO) => {
       name: ingredient.name,
       price: ingredient.price,
     })),
-  }));
+  })) as CartStateItem[];
 
   return {
     items,

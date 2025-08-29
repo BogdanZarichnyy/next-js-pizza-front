@@ -14,12 +14,10 @@ export const useQueryFilters = (filters: FiltersProps) => {
       ingredients: Array.from(filters.selectedIngredients)
     }
 
-    // console.log('result pizza', filters);
-    // console.log(qs.stringify(filters, { arrayFormat: 'comma' }));
-
     const queryStringUrl = qs.stringify(params, { arrayFormat: 'comma' });
 
     router.push(`?${queryStringUrl}`, { scroll: false });
 
-  }, [filters.pizzaTypes, filters.sizes, filters.prices, filters.selectedIngredients, router]);
+  // }, [filters.pizzaTypes, filters.sizes, filters.prices, filters.selectedIngredients]);
+  }, [filters]);
 }

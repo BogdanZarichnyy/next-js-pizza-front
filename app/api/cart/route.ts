@@ -67,6 +67,14 @@ export async function POST(req: NextRequest) {
             },
           },
         },
+        // ingredients: data.ingredients ? {
+        //   every: {
+        //     id: {
+        //       in: data.ingredients
+        //     },
+        //   },
+        // } : undefined,
+        // ...(data.ingredients ? { ingredients: { some: { id: { in: data.ingredients } } } } : {} ),
       },
     });
 
