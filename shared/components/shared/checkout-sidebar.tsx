@@ -1,0 +1,57 @@
+import { cn } from "../../lib/utils";
+import { ArrowRight, Package, Percent, Truck } from "lucide-react";
+import { CheckoutItemDetails } from "./checkout-item-details";
+import { WhiteBlock } from "./white-block";
+import { Button } from "../ui";
+
+const VAT = 15; // Податки 15%
+const DELIVERY_PRICE = 250; // Вартість доставки
+
+interface Props {
+  totalAmount: number;
+  loading?: boolean;
+  className?: string;
+}
+
+export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading, className }) => {
+  const vatPrice = (totalAmount * VAT) / 100; // Податки застосовані в проекті, чисто для прикладу
+  const totalPrice = totalAmount + vatPrice + DELIVERY_PRICE // Розрахунок загальної ціни за все
+
+  return (
+    <WhiteBlock className={cn("p-6 sticky top-4", className)}>
+
+      <div className="flex flex-col gap-1">
+        <span className="text-xl">Всього разом:</span>
+        <span className="text-[34px] font-extrabold">{totalPrice} ₴</span>
+      </div>
+
+      <CheckoutItemDetails title={
+        <div className="flex items-center">
+          <Package size={18} className="mr-2 text-gray-300" />
+          Вартість товарів у кошику:
+        </div>
+      } value={String(totalAmount)} />
+      <CheckoutItemDetails title={
+        <div className="flex items-center">
+          <Percent size={18} className="mr-2 text-gray-300" />
+          Податки:
+        </div>
+      } value={String(vatPrice)} />
+      <CheckoutItemDetails title={
+        <div className="flex items-center">
+          <Truck size={18} className="mr-2 text-gray-300" />
+          Доставка:
+        </div>
+      } value={String(DELIVERY_PRICE)} />
+
+      <Button
+        loading={loading}
+        type="submit"
+        className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+        Перейти до оплати
+        <ArrowRight className="w-5 ml-2" />
+      </Button>
+
+    </WhiteBlock>
+  );
+}
