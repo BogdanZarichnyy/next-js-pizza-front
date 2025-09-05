@@ -2,7 +2,7 @@ import { cn } from "../../lib/utils";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 import { CheckoutItemDetails } from "./checkout-item-details";
 import { WhiteBlock } from "./white-block";
-import { Button } from "../ui";
+import { Button, Skeleton } from "../ui";
 
 const VAT = 15; // Податки 15%
 const DELIVERY_PRICE = 250; // Вартість доставки
@@ -22,27 +22,33 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading, classNa
 
       <div className="flex flex-col gap-1">
         <span className="text-xl">Всього разом:</span>
-        <span className="text-[34px] font-extrabold">{totalPrice} ₴</span>
+        {loading 
+          ? (<Skeleton className="w-48 h-[51px]" />)
+          : (<span className="text-[34px] font-extrabold">{totalPrice} ₴</span>)
+        }
       </div>
 
       <CheckoutItemDetails title={
-        <div className="flex items-center">
-          <Package size={18} className="mr-2 text-gray-300" />
-          Вартість товарів у кошику:
-        </div>
-      } value={String(totalAmount)} />
+          <div className="flex items-center">
+            <Package size={18} className="mr-2 text-gray-300" />
+            Вартість товарів у кошику:
+          </div>
+        } value={loading ? (<Skeleton className="w-16 h-7 rounded-[6px]" />) : (`${String(totalAmount)} ₴`)} 
+      />
       <CheckoutItemDetails title={
-        <div className="flex items-center">
-          <Percent size={18} className="mr-2 text-gray-300" />
-          Податки:
-        </div>
-      } value={String(vatPrice)} />
+          <div className="flex items-center">
+            <Percent size={18} className="mr-2 text-gray-300" />
+            Податки:
+          </div>
+        } value={loading ? (<Skeleton className="w-16 h-7 rounded-[6px]" />) : (`${String(vatPrice)} ₴`)}
+      />
       <CheckoutItemDetails title={
-        <div className="flex items-center">
-          <Truck size={18} className="mr-2 text-gray-300" />
-          Доставка:
-        </div>
-      } value={String(DELIVERY_PRICE)} />
+          <div className="flex items-center">
+            <Truck size={18} className="mr-2 text-gray-300" />
+            Доставка:
+          </div>
+        } value={loading ? (<Skeleton className="w-16 h-7 rounded-[6px]" />) : (`${String(DELIVERY_PRICE)} ₴`)}
+      />
 
       <Button
         loading={loading}

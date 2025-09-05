@@ -1,7 +1,7 @@
 import { cn } from '../../../shared/lib/utils';
 
 interface Props {
-  text: string;
+  text?: string;
   className?: string;
 }
 

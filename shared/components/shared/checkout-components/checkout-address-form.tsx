@@ -1,17 +1,34 @@
 import { cn } from "../../../lib/utils";
 import { WhiteBlock } from "../white-block";
-import { Input, Textarea } from "../../../../shared/components/ui";
+// import { Input, Textarea } from "../../../../shared/components/ui";
 import { FormTextarea } from "../form-components";
+import { AddressInput } from "../address-input";
+import { Controller, useFormContext } from "react-hook-form";
+import { ErrorText } from "../error-text";
 
 interface Props {
   className?: string;
 }
 
-export const CheckoutAddressForm: React.FC<Props> = ({ className }) => { // 17:15:30
+export const CheckoutAddressForm: React.FC<Props> = ({ className }) => {
+  const { control } = useFormContext();
+
   return (
     <WhiteBlock title="3. Адреса доставки" className={cn("", className)}>
       <div className="flex flex-col gap-5">
-        <Input name="address" className="text-base" placeholder="Введіть адресу..." />
+        {/* <Input name="address" className="text-base" placeholder="Введіть адресу..." /> */}
+
+        <Controller 
+          control={control}
+          name="address"
+          render={({ field, fieldState }) => (
+            <>
+              <AddressInput onPlaceSelect={field.onChange} />
+              {fieldState.error && <ErrorText text={fieldState.error.message} />}
+            </>
+          )}
+        />        
+
         <FormTextarea 
           name="comment"
           className="text-base"
