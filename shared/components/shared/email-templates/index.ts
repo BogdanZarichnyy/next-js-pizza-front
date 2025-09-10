@@ -1,0 +1,1 @@
+import { PayOrderTemplate } from './pay-order-template';
