@@ -40,7 +40,6 @@ export default function CheckoutPage() {
       if (url) { // якщо url існує, то робимо на нього переадресацію
         location.href = url; // location - це глобальний об'єкт Next.js, тому і немає директиви import
       }
-
     } catch (error) {
       console.error(error);
       setSubmitting(false);

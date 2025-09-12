@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "../../lib/utils";
 import { Button, Sheet } from "../ui";
-import { SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from "./cart-drawer-item";
 import { getCartItemDetails } from "../../lib";
@@ -28,6 +28,11 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <div className={cn('flex flex-col h-full', !totalAmount && 'justify-center')}>
+          
+          <SheetTitle className="sr-only">Кошик</SheetTitle>
+          <SheetDescription className="sr-only">
+            Кошик користувача з товарами для оформлення замовлення
+          </SheetDescription>
 
           {totalAmount > 0 && (
             <SheetHeader>
@@ -45,7 +50,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                 Додайте хоча б один товар щоб здійснити замовлення
               </p>
 
-              <SheetClose>
+              <SheetClose asChild>
                 <Button className="h-12 text-base" size="lg">
                   <ArrowLeft className="w-5 mr-2" />
                   Повернутися назад

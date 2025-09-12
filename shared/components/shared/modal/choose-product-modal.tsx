@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from "../../../lib/utils";
-import { Dialog, DialogContent } from "../../ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../../ui/dialog";
 import { useRouter } from "next/navigation";
 import type { ProductWithRalationsType } from "../../../../@types/prisma";
 import { ProductForm } from "../product-form";
@@ -23,6 +23,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           className,
         )}
       >
+        <DialogTitle className="sr-only">Виберіть продукт</DialogTitle>
         <ProductForm product={product} onSubmit={() => router.back()} />
       </DialogContent>
     </Dialog>

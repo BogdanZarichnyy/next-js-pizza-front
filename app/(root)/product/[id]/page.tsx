@@ -2,7 +2,14 @@ import { notFound } from "next/navigation";
 import { prisma } from "../../../../prisma/prisma-client";
 import { Container, ProductForm } from "../../../../shared/components/shared";
 
-export default async function ProductPage({ params: { id } }: { params: { id: string } }) {
+interface Props {
+  params: { id: string };
+}
+
+export default async function ProductPage({ params }: Props ) {
+  const awaitedParams = await params; // ⚠ обов'язково await
+  const id = awaitedParams.id;
+
   const product = await prisma.product.findFirst({ 
     where: { 
       id: Number(id) 

@@ -16,7 +16,6 @@ export const CheckoutAddressForm: React.FC<Props> = ({ className }) => {
   return (
     <WhiteBlock title="3. Адреса доставки" className={cn("", className)}>
       <div className="flex flex-col gap-5">
-        {/* <Input name="address" className="text-base" placeholder="Введіть адресу..." /> */}
 
         <Controller 
           control={control}

@@ -90,14 +90,17 @@ export async function createOrder(data: CheckoutFormSchemaType) { // 18:05:25
       throw new Error("Payment data not found");
     }
 
-    // await prisma.order.update({
-    //   where: {
-    //     id: order.id,
-    //   },
-    //   data: {
-    //     paymentId: paymentData.response.payment_id, // payment_id у відповіді Fondy
-    //   },
-    // });
+    // Вносибо в БД інформацію про платіж 18:54:40
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: paymentData.response.payment_id, // payment_id у відповіді Fondy, для інших сервісів тут буде інша структура
+      },
+    });
+
+    const paymentUrl = paymentData.response.checkout_url; // URL Fondy для здійснення оплати замовлення
 
     // Створюємо повідомлення на електронну пошту користувача про оплату замовлення
     await sendEmail(
@@ -106,11 +109,11 @@ export async function createOrder(data: CheckoutFormSchemaType) { // 18:05:25
       PayOrderTemplate({
         orderId: order.id,
         totalAmount: order.totalAmount,
-        paymentUrl: "https://resend.com/docs/send-with-nextjs",
+        paymentUrl,
       }) as ReactNode,
     );
 
-
+    return paymentUrl;
   } catch (error) {
     console.error(error);
   }

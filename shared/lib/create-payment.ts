@@ -9,20 +9,28 @@ interface Props {
 }
 
 export async function createPayment(details: Props) {
-  const merchantId = process.env.NEXT_PUBLIC_FONDY_MERCHANT_ID || "1397120"; // свій 1397120
-  // const merchantId = "1396424"; // тестовий 1396424
-  const secretKey = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY || "test"; // обов'язково "test" для sandbox
-  const responseUrl = process.env.NEXT_PUBLIC_FONDY_CALLBACK_URL || "http://localhost:3000/?paid";
+  // const merchantId = process.env.NEXT_PUBLIC_FONDY_MERCHANT_ID; // свій MERCHANT_ID
+  // const secretKey = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY; // свій SECRET_KEY, якого ще немає
+
+  const merchantId = "1396424"; // тестовий 1396424 працює тільки з ключем "test", інакше буде помилка
+  const secretKey = "test"; // тестовий 1396424 обов'язково з "test" для sandbox
+
+  const responseUrl = process.env.NEXT_PUBLIC_FONDY_CALLBACK_URL || "http://localhost:3000/?paid"; // сторінка переадресації після оплати
+  // const responseUrl = "http://localhost:3000/paid"; // сторінка переадресації після оплати
+  const responseServerUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_CALLBACK_URL || "https://short-terms-slide.loca.lt/api/checkout/callback"; // сторінка переадресації після оплати для сервера
+
+  // унікальний order_id, інакше сервіс поверне помилку, йому потрібні унікальні order_id
+  const uniqueOrderId = `${details.orderId}_${Date.now()}`;
 
   const payload: FondyType = {
-    order_id: String(details.orderId), // ⚠ рядок
+    // order_id: String(details.orderId), // ⚠ рядок
+    order_id: uniqueOrderId,
     merchant_id: merchantId,
-    // order_desc: details.description.trim(), // ⚠ без зайвих пробілів
     order_desc: details.description,
     currency: "UAH", // в гривнях
     amount: Math.round(details.amount * 100), // ⚠ integer - 100.00 грн (Fondy працює в копійках)
     response_url: responseUrl, // куди повернути після оплати
-    // server_callback_url: "http://localhost:3000/api/fondy/callback", // для перевірки платежу на бекенді, в даному проекті це не потрібно
+    server_callback_url: responseServerUrl, // для відправки POST параметрів фінальної відповіді Fondy платежу для бекенду
   };
 
   // 🔑 Формуємо підпис SHA1 - потрібен для уніфікації платежів сервісу Fondy, інакше платіж не пройде
@@ -33,7 +41,8 @@ export async function createPayment(details: Props) {
     payload.merchant_id,
     payload.order_desc,
     payload.order_id,
-    payload.response_url
+    payload.response_url,
+    payload.server_callback_url,
   ].join("|"); // 🔑 Фіксований порядок полів для redirect flow
 
   // SHA1 підпис
@@ -48,8 +57,6 @@ export async function createPayment(details: Props) {
     { request: payload },
     { headers: { "Content-Type": "application/json" } }
   );
-
-  console.log(data);
 
   if (!data?.response?.checkout_url) {
     throw new Error("Fondy не повернув checkout_url");
