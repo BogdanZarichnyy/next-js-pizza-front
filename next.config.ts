@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
   experimental: {
+    serverActions: {},
     optimizeRouterScrolling: true,
   },
 };

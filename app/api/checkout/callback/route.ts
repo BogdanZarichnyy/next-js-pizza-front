@@ -6,32 +6,48 @@ import { CartItemDTO } from "../../../../shared/servises/dto/cart.dto";
 import { sendEmail } from "../../../../shared/lib";
 import { OrderSuccessTemplate } from "../../../../shared/components/shared/email-templates/order-success-template";
 import { ReactNode } from "react";
+import crypto from "crypto";
 
 export async function POST(req: NextRequest) {
-  console.log('reqPOST', req.headers);
+  console.log('NextRequest POST', req.headers);
   
   try {
-
-    // const body = (await req.json()) as PaymentCallbackDataFondyType;
-    // const body = await req.json();
-
     let body: any;
     const contentType = req.headers.get('content-type') || '';
 
+    // перевіряємо тип відповіді щоб впевнитися в правильності парсингу цих даних
     if (contentType.includes('application/json')) {
-      console.log(1);
-      body = await req.json();
+      body = (await req.json()) as PaymentCallbackDataFondyType;
     } else if (contentType.includes('application/x-www-form-urlencoded')) {
-      console.log(2);
       const text = await req.text();
       const form = new URLSearchParams(text);
       body = Object.fromEntries(form.entries());
     } else {
-      console.log(3);
       body = await req.text();
     }
 
     console.log("[Checkout Callback] Parsed body:", body);
+
+    // const FONDY_SECRET_KEY = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY as string; // власний ключ для sandbox
+    const FONDY_SECRET_KEY = process.env.NEXT_PUBLIC_FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
+
+    // перевіряємо сигнатуру платежу, щоб впевнитися що це саме той платіж який було здійснено нашим користувачем
+    // якщо цього не зробити, то можна відправити в БД фейковий платіж
+    if (!body.response_signature_string || !body.signature) { // перевіряємо присутність сигнатури
+      return NextResponse.json({ error: "Signature is not found" });
+    } else {
+      const signatureString = body.response_signature_string.replace(/\*+/g, FONDY_SECRET_KEY);
+      const hash = crypto
+        .createHash("sha1")
+        .update(signatureString, "utf8") // кодування "utf8" за замовчуванням, але можна і перестрахуватися
+        .digest("hex");
+      
+      console.log("Fondy check:", { hash, signature: body.signature });
+
+      if (hash.toLowerCase() !== body.signature.toLowerCase()) {
+        return NextResponse.json({ error: "Signature is wrong" });
+      }
+    }
 
     const order = await prisma.order.findFirst({
       where: {
@@ -43,7 +59,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Order is not found" });
     }
 
-    const isSucceeded = body.order_status === "success";
+    const isSucceeded = body.response_status === "success" && body.order_status === 'approved';
 
     await prisma.order.update({
       where: {

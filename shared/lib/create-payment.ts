@@ -12,12 +12,11 @@ export async function createPayment(details: Props) {
   // const merchantId = process.env.NEXT_PUBLIC_FONDY_MERCHANT_ID; // свій MERCHANT_ID
   // const secretKey = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY; // свій SECRET_KEY, якого ще немає
 
-  const merchantId = "1396424"; // тестовий 1396424 працює тільки з ключем "test", інакше буде помилка
-  const secretKey = "test"; // тестовий 1396424 обов'язково з "test" для sandbox
+  const merchantId = process.env.NEXT_PUBLIC_FONDY_TEST_MERCHANT_ID as string; // тестовий 1396424 працює тільки з ключем "test", інакше буде помилка
+  const secretKey = process.env.NEXT_PUBLIC_FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
 
-  const responseUrl = process.env.NEXT_PUBLIC_FONDY_CALLBACK_URL || "http://localhost:3000/?paid"; // сторінка переадресації після оплати
-  // const responseUrl = "http://localhost:3000/paid"; // сторінка переадресації після оплати
-  const responseServerUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_CALLBACK_URL || "https://short-terms-slide.loca.lt/api/checkout/callback"; // сторінка переадресації після оплати для сервера
+  const responseUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_REDIRECT_URL as string; // сторінка переадресації після оплати
+  const responseServerUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_CALLBACK_URL as string; // сторінка переадресації після оплати для сервера
 
   // унікальний order_id, інакше сервіс поверне помилку, йому потрібні унікальні order_id
   const uniqueOrderId = `${details.orderId}_${Date.now()}`;
@@ -48,7 +47,7 @@ export async function createPayment(details: Props) {
   // SHA1 підпис
   payload.signature = crypto
     .createHash("sha1")
-    .update(signatureString)
+    .update(signatureString, "utf8") // кодування "utf8" за замовчуванням, але можна і перестрахуватися
     .digest("hex");
 
   // Відправка платежу
@@ -57,6 +56,8 @@ export async function createPayment(details: Props) {
     { request: payload },
     { headers: { "Content-Type": "application/json" } }
   );
+
+  console.log('fondy response', data);
 
   if (!data?.response?.checkout_url) {
     throw new Error("Fondy не повернув checkout_url");
