@@ -32,6 +32,7 @@ export { ErrorText } from './error-text';
 export { ClearButton } from './clear-button';
 export { AddressInput } from './address-input';
 export * from './email-templates';
+export { ProfileButton } from './profile-button';
 
 // import { cn } from "../../lib/utils";
 

@@ -163,3 +163,31 @@ html {
 input.geoapify-autocomplete-input {
   @apply text-base file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive;
 }
+
+/* ламається вся верстка */
+/* #nprogress .bar {
+  @apply bg-primary !important;
+}
+
+#nprogress .peg {
+  @apply shadow-md shadow-primary !important;
+}
+
+#nprogress .spinner-icon {
+  @apply border-t-primary border-l-primary !important;
+} */
+
+/* цей варіант робочий */
+#nprogress .bar {
+  background-color: theme('colors.primary.DEFAULT') !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px theme('colors.primary.DEFAULT'),
+              0 0 5px theme('colors.primary.DEFAULT') !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: theme('colors.primary.DEFAULT') !important;
+  border-left-color: theme('colors.primary.DEFAULT') !important;
+}

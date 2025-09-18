@@ -6,7 +6,7 @@ interface Props {
   params: { id: string };
 }
 
-export default async function ProductPage({ params }: Props ) {
+export default async function ProductPage({ params }: Props) {
   const awaitedParams = await params; // ⚠ обов'язково await
   const id = awaitedParams.id;
 
