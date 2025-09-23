@@ -23,12 +23,11 @@ export const LoginForm: React.FC<Props> = ({ onClose, className }) => {
   });
 
   const onSubmit = async (data: TypeFormLoginValues) => {
-    console.log(data);
     try {
       const responce = await signIn('credentials', {
         ...data,
         redirect: false,
-      })
+      });
 
       if (!responce?.ok) {
         throw Error();

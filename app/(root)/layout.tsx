@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <main className="min-h-screen">
-      {/* <Suspense> */}
+      <Suspense>
         <Header />
-      {/* </Suspense> */}
+      </Suspense>
       {children}
       {modal}
     </main>

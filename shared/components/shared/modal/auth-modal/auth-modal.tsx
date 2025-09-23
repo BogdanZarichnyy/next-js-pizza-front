@@ -34,7 +34,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose, className }) => {
           className,
         )}
       >
-        <DialogTitle className="sr-only">Авторизація</DialogTitle>
+        <DialogTitle className="sr-only">Авторизація / Реєстрація</DialogTitle>
         
         {type === 'login' ? (
           <LoginForm onClose={handleClose} />
@@ -56,7 +56,8 @@ export const AuthModal: React.FC<Props> = ({ open, onClose, className }) => {
             type="button"
             className="gap-2 h-12 p-2 flex-1"
           >
-            <img className="w-6 h-6" src="https://github.githubassets.com/favicons/favicon.svg" />
+            {/* <img className="w-6 h-6" src="https://github.githubassets.com/favicons/favicon.svg" /> */}
+            <img className="w-6 h-6" src="/github.svg" />
             GitHub
           </Button>
 
@@ -73,7 +74,8 @@ export const AuthModal: React.FC<Props> = ({ open, onClose, className }) => {
           >
             <img
               className="w-6 h-6"
-              src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
+              // src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
+              src="/google_24px.svg"
             />
             Google
           </Button>

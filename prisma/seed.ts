@@ -185,7 +185,65 @@ async function up() {
         connect: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }] 
       }
     },
+  });
 
+  await prisma.story.createMany({
+    data: [
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        previewImageUrl:
+          '/assets/peperci.jpg',
+      },
+    ],
+  });
+
+  await prisma.storyItem.createMany({
+    data: [
+      {
+        storyId: 1,
+        sourceUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        storyId: 1,
+        sourceUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        storyId: 1,
+        sourceUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        storyId: 1,
+        sourceUrl:
+          '/assets/peperci.jpg',
+      },
+      {
+        storyId: 1,
+        sourceUrl:
+          '/assets/peperci.jpg',
+      },
+    ],
   });
 }
 
@@ -199,6 +257,8 @@ async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Order" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "VerificationCode" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Story" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "StoryItem" RESTART IDENTITY CASCADE`;
 }
 
 async function main() {

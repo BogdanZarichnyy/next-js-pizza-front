@@ -33,6 +33,9 @@ export { ClearButton } from './clear-button';
 export { AddressInput } from './address-input';
 export * from './email-templates';
 export { ProfileButton } from './profile-button';
+export { InfoBlock } from './info-block';
+export { ProfileForm } from './profile-form';
+export { Stories } from './stories';
 
 // import { cn } from "../../lib/utils";
 

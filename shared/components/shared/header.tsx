@@ -7,7 +7,7 @@ import Link from "next/link";
 import { SearchInput } from "./search-input";
 import { CartButton } from "./cart-button";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { ProfileButton } from "./profile-button";
 import { AuthModal } from "./modal";
@@ -19,12 +19,24 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart= true, className }) => {
+  const router = useRouter();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    let toastMessage = '';
+
     if (searchParams.has("paid")) {
-      toast.success("Замовлення успішно оплачено! Детальна інформація відправлена на пошту.");
+      toastMessage = "Замовлення успішно оплачено! Детальна інформація відправлена на пошту.";
+    }
+
+    if (searchParams.has("verified")) {
+      toastMessage = "Пошта успішно підтверджена.";
+    }
+
+    if (toastMessage) {
+      router.replace('/');
+      toast.success(toastMessage);
     }
   }, []);
 
