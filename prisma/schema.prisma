@@ -1,5 +1,8 @@
 generator client {
   provider = "prisma-client-js"
+  // url      = env("POSTGRES_PRISMA_URL")
+  // directUrl   = env("POSTGRES_URL_NON_POOLING")
+
   // output   = "../node_modules/@prisma/client"
   // output   = "generated/prisma/client"
 }
