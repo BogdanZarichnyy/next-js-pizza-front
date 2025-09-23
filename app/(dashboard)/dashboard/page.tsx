@@ -1,14 +1,7 @@
-import { cn } from "../../../shared/lib/utils";
-
-interface Props {
-  className?: string
-}
-
-export default function Dashboard({ children }: { children: React.ReactNode }) {
+export default function Dashboard() {
   return (
-    <div className={cn("", "")}>
+    <div className="">
       Dashboard
-      {children}
     </div>
   );
 }
