@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   console.log('NextRequest POST', req.headers);
   
   try {
-    let body: any;
+    let body: PaymentCallbackDataFondyType | Record<string, string> | string;
     const contentType = req.headers.get('content-type') || '';
 
     // перевіряємо тип відповіді щоб впевнитися в правильності парсингу цих даних
@@ -21,9 +21,11 @@ export async function POST(req: NextRequest) {
     } else if (contentType.includes('application/x-www-form-urlencoded')) {
       const text = await req.text();
       const form = new URLSearchParams(text);
-      body = Object.fromEntries(form.entries());
+      body = Object.fromEntries(form.entries()) as Record<string, string>;
+      return NextResponse.json({ error: "Fondy: Неправильний формат відповіді" });
     } else {
-      body = await req.text();
+      body = await req.text() as string;
+      return NextResponse.json({ error: "Fondy: Неправильний формат відповіді" });
     }
 
     console.log("[Checkout Callback] Parsed body:", body);
