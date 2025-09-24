@@ -101,7 +101,7 @@ export const ingredients = [
   {
     name: 'Сололодкий перець',
     price: 59,
-    imageUrl: '/assets/Сололодкий перець.jpg',
+    imageUrl: '/assets/Солодкий перець.jpg',
   },
   {
     name: 'Кубики бринзи',
@@ -162,7 +162,7 @@ export const products = [
     categoryId: 4,
   },
   {
-    name: 'Карамелье яблуко молочний коктейль',
+    name: 'Карамельне яблуко молочний коктейль',
     imageUrl: '/assets/peperci.jpg',
     categoryId: 4,
   },
