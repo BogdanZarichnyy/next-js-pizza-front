@@ -9,14 +9,14 @@ interface Props {
 }
 
 export async function createPayment(details: Props) {
-  // const merchantId = process.env.NEXT_PUBLIC_FONDY_MERCHANT_ID; // свій MERCHANT_ID
-  // const secretKey = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY; // свій SECRET_KEY, якого ще немає
+  // const merchantId = process.env.FONDY_TEST_MERCHANT_ID; // свій MERCHANT_ID
+  // const secretKey = process.env.FONDY_TEST_SECRET_KEY; // свій SECRET_KEY, якого ще немає
 
-  const merchantId = process.env.NEXT_PUBLIC_FONDY_TEST_MERCHANT_ID as string; // тестовий 1396424 працює тільки з ключем "test", інакше буде помилка
-  const secretKey = process.env.NEXT_PUBLIC_FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
+  const merchantId = process.env.FONDY_TEST_MERCHANT_ID as string; // тестовий 1396424 працює тільки з ключем "test", інакше буде помилка
+  const secretKey = process.env.FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
 
-  const responseUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_REDIRECT_URL as string; // сторінка переадресації після оплати
-  const responseServerUrl = process.env.NEXT_PUBLIC_FONDY_SERVER_CALLBACK_URL as string; // сторінка переадресації після оплати для сервера
+  const responseUrl = process.env.FONDY_SERVER_REDIRECT_URL as string; // сторінка переадресації після оплати
+  const responseServerUrl = process.env.FONDY_SERVER_CALLBACK_URL as string; // сторінка переадресації після оплати для сервера
 
   // унікальний order_id, інакше сервіс поверне помилку, йому потрібні унікальні order_id
   const uniqueOrderId = `${details.orderId}_${Date.now()}`;
