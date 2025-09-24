@@ -3,7 +3,7 @@ import { prisma } from "../../../../../prisma/prisma-client";
 import { ChooseProductModal } from "../../../../../shared/components/shared";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProductModalPage({ params }: Props) {
@@ -11,7 +11,7 @@ export default async function ProductModalPage({ params }: Props) {
   // const awaitedParams = params; // без await для build vercel
   // const id = awaitedParams.id;
 
-  const { id } = params; // ⚠ обов'язково await
+  const { id } = await params; // ⚠ обов'язково await
 
   const product = await prisma.product.findFirst({ 
     where: {
