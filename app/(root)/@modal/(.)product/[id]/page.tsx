@@ -7,10 +7,10 @@ interface Props {
 }
 
 export default async function ProductModalPage({ params }: Props) {
-  const awaitedParams = await params; // ⚠ обов'язково await
-  // const awaitedParams = params; // без await
+  // const awaitedParams = await params; // ⚠ обов'язково await
+  const awaitedParams = params; // без await для build vercel
   const id = awaitedParams.id;
-
+// 
   const product = await prisma.product.findFirst({ 
     where: {
       id: Number(id),
