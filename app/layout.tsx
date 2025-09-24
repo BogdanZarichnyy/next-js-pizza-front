@@ -10,11 +10,11 @@ const nunito = Nunito({
   display: 'swap'
 });
 
-// export const metadata: Metadata = {
-//   icons: {
-//     icon: '/logo.png', // favicon вказується тут
-//   },
-// };
+export const metadata: Metadata = {
+  icons: {
+    icon: '/logo.png', // favicon вказується тут
+  },
+};
 
 export default function MainLayout({
   children
@@ -23,9 +23,9 @@ export default function MainLayout({
 }>) {
   return (
     <html lang="uk-UA" data-scroll-behavior="smooth">
-      <head>
+      {/* <head>
         <link data-rh="true" rel="icon" href="/logo.png" type="image/png" />
-      </head>
+      </head> */}
       <body className={nunito.className}>
         <Providers>{children}</Providers>
       </body>
