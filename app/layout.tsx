@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+// import type { Metadata } from 'next';
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Providers } from "../shared/components/shared/providers";
@@ -10,11 +10,11 @@ const nunito = Nunito({
   display: 'swap'
 });
 
-export const metadata: Metadata = {
-  icons: {
-    icon: '/logo.png', // favicon вказується тут
-  },
-};
+// export const metadata: Metadata = {
+//   icons: {
+//     icon: '/logo.png', // favicon вказується тут
+//   },
+// };
 
 export default function MainLayout({
   children
