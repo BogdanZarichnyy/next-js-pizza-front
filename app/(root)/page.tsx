@@ -2,9 +2,12 @@ import { Container, Filters, ProductsGroupList, Stories, Title, TopBar } from ".
 import { Suspense } from "react";
 import { findPizzas, GetSearchParams } from "../../shared/lib/find-pizzas";
 
-export default async function Home({ searchParams }: { searchParams: GetSearchParams }) {
-  // ⚠ обов'язково await для searchParams
-  const params = await searchParams;
+interface Props {
+  searchParams: Promise<GetSearchParams>;
+}
+
+export default async function Home({ searchParams }: Props) {
+  const params = await searchParams; // ⚠ обов'язково await для searchParams
 
   const categories = await findPizzas(params);
 

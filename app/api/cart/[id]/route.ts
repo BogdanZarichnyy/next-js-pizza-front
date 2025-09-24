@@ -3,12 +3,13 @@ import { prisma } from "../../../../prisma/prisma-client";
 import { updateCartTotalAmount } from "../../../../shared/lib";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function PATCH(req: NextRequest, { params }: Props) {
   try {
-    const id = Number(params.id);
+    // const id = Number(params.id);
+    const { id } = await params; // ⚠️ треба await
     const data = (await req.json()) as { quantity: number };
     const token = req.cookies.get('cartToken')?.value;
 
@@ -18,7 +19,7 @@ export async function PATCH(req: NextRequest, { params }: Props) {
 
     const cartItem = await prisma.cartItem.findFirst({
       where: {
-        id,
+        id: Number(id),
       },
     });
 
@@ -30,7 +31,7 @@ export async function PATCH(req: NextRequest, { params }: Props) {
     // {quantity: 2} - наприклад
     await prisma.cartItem.update({
       where: {
-        id,
+        id: Number(id),
       },
       data: {
         quantity: data.quantity,
@@ -48,7 +49,8 @@ export async function PATCH(req: NextRequest, { params }: Props) {
 
 export async function DELETE(req: NextRequest, { params }: Props) {
   try {
-    const id = Number(params.id);
+    // const id = Number(params.id);
+    const { id } = await params; // ⚠️ треба await
     const token = req.cookies.get('cartToken')?.value;
 
     if(!token) {
@@ -57,7 +59,7 @@ export async function DELETE(req: NextRequest, { params }: Props) {
 
     const cartItem = await prisma.cartItem.findFirst({
       where: {
-        id,
+        id: Number(id),
       },
     });
 
@@ -67,7 +69,7 @@ export async function DELETE(req: NextRequest, { params }: Props) {
 
     await prisma.cartItem.delete({
       where: {
-        id,
+        id: Number(id),
       },
     });
 
