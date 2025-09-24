@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
 
     console.log("[Checkout Callback] Parsed body:", body);
 
-    // const FONDY_SECRET_KEY = process.env.NEXT_PUBLIC_FONDY_SECRET_KEY as string; // власний ключ для sandbox
-    const FONDY_SECRET_KEY = process.env.NEXT_PUBLIC_FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
+    // const FONDY_SECRET_KEY = process.env.FONDY_TEST_SECRET_KEY as string; // власний ключ для sandbox
+    const FONDY_SECRET_KEY = process.env.FONDY_TEST_SECRET_KEY as string; // тестовий "test" для sandbox
 
     // перевіряємо сигнатуру платежу, щоб впевнитися що це саме той платіж який було здійснено нашим користувачем
     // якщо цього не зробити, то можна відправити в БД фейковий платіж
@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
       console.log("Fondy check:", { hash, signature: body.signature });
 
       if (hash.toLowerCase() !== body.signature.toLowerCase()) {
+        console.log("[Checkout Callback] Signature is wrong", { hash, signature: body.signature });
         return NextResponse.json({ error: "Signature is wrong" });
       }
     }
