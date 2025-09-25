@@ -31,7 +31,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onSubmit,
   className,
 }) => {
-  const { size, type, currentItemId, setSize, setType, selectedIngredients, addIngredient, availablePizzaSizes } = usePizzaOptions(items);
+  const { size, type, pizzaImageUrl, currentItemId, setSize, setType, selectedIngredients, addIngredient, availablePizzaSizes } = usePizzaOptions(items);
   const { totalPrice, textDetails } = getPizzaDetails(size, type, items, ingredients, selectedIngredients);
 
   const handleClickAdd = () => {
@@ -42,7 +42,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
   return (
     <div className={cn("flex flex-1", className)}>
-      <PizzaImage imageUrl={imageUrl} size={size} />
+      <PizzaImage imageUrl={pizzaImageUrl ?? imageUrl} size={size ?? 30} />
 
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />

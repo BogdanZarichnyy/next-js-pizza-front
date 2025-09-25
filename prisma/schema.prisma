@@ -24,8 +24,8 @@ model User {
   cart             Cart?
   orders           Order[]
   verificationCode VerificationCode?
-  createAt         DateTime          @default(now())
-  updateAt         DateTime          @updatedAt
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 enum UserRole {
@@ -36,21 +36,22 @@ enum UserRole {
 model Product {
   id          Int           @id @default(autoincrement())
   name        String
+  info        String?
   imageUrl    String
   category    Category      @relation(fields: [categoryId], references: [id])
   categoryId  Int
   ingredients Ingredient[]
   items       ProductItem[]
-  createAt    DateTime      @default(now())
-  updateAt    DateTime      @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 model Category {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  products Product[]
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Ingredient {
@@ -60,8 +61,8 @@ model Ingredient {
   imageUrl  String
   products  Product[]
   cartItems CartItem[]
-  createAt  DateTime   @default(now())
-  updateAt  DateTime   @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model ProductItem {
@@ -69,11 +70,12 @@ model ProductItem {
   price     Int
   size      Int?
   pizzaType Int?
+  imageUrl  String?
   cartItems CartItem[]
   product   Product    @relation(fields: [productId], references: [id])
   productId Int
-  createAt  DateTime   @default(now())
-  updateAt  DateTime   @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Cart {
@@ -83,8 +85,8 @@ model Cart {
   items       CartItem[]
   totalAmount Int        @default(0)
   token       String
-  createAt    DateTime   @default(now())
-  updateAt    DateTime   @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model CartItem {
@@ -95,8 +97,8 @@ model CartItem {
   productItemId Int
   quantity      Int          @default(1)
   ingredients   Ingredient[]
-  createAt      DateTime     @default(now())
-  updateAt      DateTime     @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Order {
@@ -113,15 +115,17 @@ model Order {
   phone       String
   address     String
   comment     String?
-  createAt    DateTime    @default(now())
-  updateAt    DateTime    @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model Story {
   id              Int         @id @default(autoincrement())
   previewImageUrl String
+  name            String?
   items           StoryItem[]
   createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model StoryItem {
@@ -129,7 +133,10 @@ model StoryItem {
   storyId   Int
   story     Story    @relation(fields: [storyId], references: [id])
   sourceUrl String
+  title     String?
+  text      String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum OrderStatus {
@@ -139,11 +146,12 @@ enum OrderStatus {
 }
 
 model VerificationCode {
-  id       Int      @id @default(autoincrement())
-  user     User     @relation(fields: [userId], references: [id])
-  userId   Int      @unique
-  code     String
-  createAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+  code      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([userId, code])
 }

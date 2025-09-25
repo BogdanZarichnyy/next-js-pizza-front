@@ -27,7 +27,7 @@ export default async function ProductPage({ params }: Props) {
       items: true,
       // items: {
       //   orderBy: {
-      //     createAt: 'desc',
+      //     createdAt: 'desc',
       //   },
       //   include: {
       //     product: {

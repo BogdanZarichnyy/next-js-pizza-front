@@ -5,6 +5,7 @@ import { Button } from '../ui';
 interface Props {
   imageUrl: string;
   name: string;
+  info?: string | null;
   price: number;
   loading?: boolean;
   // onSubmit: (itemId: number, ingredients: number[]) => void;
@@ -15,6 +16,7 @@ interface Props {
 // Форма вибору продукту
 export const ChooseProductForm: React.FC<Props> = ({ 
   name,
+  info,
   imageUrl,
   price,
   loading,
@@ -35,6 +37,8 @@ export const ChooseProductForm: React.FC<Props> = ({
       <div className="w-[490px] bg-[#f7f6f5] p-7">
 
         <Title text={name} size="md" className="font-extrabold mb-1" />
+
+        <p className="text-sm text-gray-400">{info}</p>
 
         <Button
           loading={loading}

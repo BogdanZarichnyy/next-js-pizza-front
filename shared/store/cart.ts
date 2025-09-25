@@ -17,7 +17,7 @@ export interface CartState {
   updateItemQuantity: (id: number, quantity: number) => Promise<void>;
 
   /* Запит на додавання товару в кошик */
-  addCartItem: (values: any) => Promise<void>;
+  addCartItem: (values: CreateCartItemValues) => Promise<void>;
 
   /* Запит на видалення товару із кошика */
   removeCartItem: (id: number) => Promise<void>;
@@ -33,6 +33,10 @@ export const useCartStore = create<CartState>()((set, get) => ({
     try {
       set({ loading: true, error: false });
       const data = await Api.cart.getCart();
+      if (!data) {
+        set({ items: [], totalAmount: 0 });
+        return;
+      }
       set(getCartDetails(data));
     } catch (error) {
       console.error(error);

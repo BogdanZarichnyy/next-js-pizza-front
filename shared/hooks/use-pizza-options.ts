@@ -8,12 +8,11 @@ import { ProductItem } from "@prisma/client";
 interface ReturnProps {
   size: PizzaSize;
   type: PizzaType;
+  pizzaImageUrl: string;
   selectedIngredients: Set<number>;
   availablePizzaSizes: Variant[];
   currentItemId?: number;
-  // setSize: Dispatch<SetStateAction<PizzaSize>>,
   setSize: (size: PizzaSize) => void;
-  // setType: Dispatch<SetStateAction<PizzaType>>,
   setType: (type: PizzaType) => void;
   addIngredient: (id: number) => void;
 }
@@ -27,6 +26,8 @@ export const usePizzaOptions = (items: ProductItem[]): ReturnProps => {
 
   const currentItemId = items.find((item) => item.pizzaType === type && item.size === size)?.id;
 
+  const pizzaImageUrl = items.find((item) => item.pizzaType === type && item.size === size)?.imageUrl as string;
+
   useEffect(() => {
     const isAvailableSize = availablePizzaSizes?.find((item) => Number(item.value) === size && !item.disabled);
     const availableSize = availablePizzaSizes?.find((item) => !item.disabled);
@@ -36,5 +37,5 @@ export const usePizzaOptions = (items: ProductItem[]): ReturnProps => {
     }
   }, [type]);
 
-  return { size, type, selectedIngredients, availablePizzaSizes, currentItemId, setSize, setType, addIngredient  };
+  return { size, type, pizzaImageUrl, selectedIngredients, availablePizzaSizes, currentItemId, setSize, setType, addIngredient  };
 }

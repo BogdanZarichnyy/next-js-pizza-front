@@ -50,6 +50,7 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit: closeModal, cl
             <ChooseProductForm 
               imageUrl={product.imageUrl} 
               name={product.name} 
+              info={product.info} 
               onSubmit={onSubmitProduct} 
               price={firstItem.price}
               loading={loading}

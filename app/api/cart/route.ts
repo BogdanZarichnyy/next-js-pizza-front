@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       include: {
         items: {
           orderBy: {
-            createAt: 'desc',
+            createdAt: 'desc',
           },
           include: {
             productItem: {

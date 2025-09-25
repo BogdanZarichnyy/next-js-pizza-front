@@ -8,6 +8,7 @@ import { Ingredient } from "@prisma/client";
 interface Props {
   id: number;
   name: string;
+  info?: string | null;
   price: number;
   imageUrl: string;
   ingredients: Ingredient[];
@@ -17,6 +18,7 @@ interface Props {
 export const ProductCard: React.FC<Props> = ({ 
   id,
   name,
+  info,
   price,
   imageUrl,
   ingredients,
@@ -32,7 +34,7 @@ export const ProductCard: React.FC<Props> = ({
 
         <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
         <p className="text-sm text-gray-400">
-          { ingredients.map((ingredient) => ingredient.name).join(', ') }
+          { !info ? ingredients.map((ingredient) => ingredient.name).join(', ') : info }
         </p>
 
         <div className="flex justify-between items-center mt-4">
@@ -40,7 +42,7 @@ export const ProductCard: React.FC<Props> = ({
             від <b>{price} ₴</b>
           </span>
 
-          <Button variant="secondary"  className="text-base font-bold">
+          <Button variant="secondary" className="text-base font-bold cursor-pointer">
             <Plus size={20} className="mr-1" />
             Додати
           </Button>

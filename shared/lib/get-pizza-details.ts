@@ -10,7 +10,7 @@ export const getPizzaDetails = (
   selectedIngredients: Set<number>
 ) => {
   const totalPrice = calculateTotalPizzaPrice(type, size, items, ingredients, selectedIngredients);
-  const textDetails =`${size} см, ${mapPizzaType[type]} піцца, інгредієнти: (${selectedIngredients.size})`;
+  const textDetails =`${size} см, ${mapPizzaType[type]} піцца, вибрані інгредієнти: (${selectedIngredients.size})`;
 
   return { totalPrice, textDetails };
 }
